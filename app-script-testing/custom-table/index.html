@@ -23,7 +23,7 @@
           <input type="text" class="form-control" id="surName" placeholder="นามสกุล">
         </div>
         <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-primary" onclick="update()">Submit</button>
+          <button type="button" class="btn btn-primary" onclick="update()">ส่งข้อมูล</button>
         </div>
         <script>
           function update(){
@@ -47,9 +47,14 @@
               var memberSurName = sheetValues[i][5];
               if (memberFirstName === firstName && memberSurName === surName) {
                 for (var j = 0; j < sheetValues[i].length; j++) {
-                  message += "<tr><td>"+sheetValues[0][j]+"</td><td>" + sheetValues[i][j] + "</td><tr>";
+                  if (j === 1 && sheetValues[i][1] === ""){
+                    message += "<tr><td>"+sheetValues[0][j]+"</td><td>เป็นสมาชิก</td><tr>";
+                  }
+                  else if (j<=5 || j>=12){
+                    message += "<tr><td>"+sheetValues[0][j]+"</td><td>" + sheetValues[i][j] + "</td><tr>";
+                  }
                 }
-                status = "Found";
+                status = "found";
                 break;
               }
             }
@@ -65,4 +70,3 @@
     </div>
   </body>
 </html>
-
