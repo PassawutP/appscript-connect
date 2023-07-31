@@ -27,6 +27,7 @@
         </div>
         <script>
           function update(){
+            document.querySelector('#receive').innerHTML = "";
             document.querySelector('#loading').style.visibility = 'visible';
             google.script.run.withSuccessHandler(onDataReceived).myFunction();
           }
@@ -48,6 +49,7 @@
                 for (var j = 0; j < sheetValues[i].length; j++) {
                   message += "<tr><td>"+sheetValues[0][j]+"</td><td>" + sheetValues[i][j] + "</td><tr>";
                 }
+                status = "Found";
                 break;
               }
             }
@@ -63,3 +65,4 @@
     </div>
   </body>
 </html>
+
