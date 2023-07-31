@@ -1,0 +1,36 @@
+<script>
+    /*
+    *THIS FUNCTION CALLS THE getData() FUNCTION IN THE Code.gs FILE, 
+    *AND PASS RETURNED DATA TO showData() FUNCTION
+    */
+    google.script.run.withSuccessHandler(showData).getData();
+   
+    //THIS FUNCTION GENERATE THE DATA TABLE FROM THE DATA ARRAY
+    function showData(dataArray){
+      $(document).ready(function(){
+        $('#data-table').DataTable({
+          data: dataArray,
+          //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+          columns: [
+            {"title":"หมายเลขสมาชิก"},
+            {"title":"สถานภาพ"},
+            {"title":"เพศ"},
+            {"title":"คำนำหน้า"},
+            {"title":"ชื่อ - ชื่อกลาง"},
+            {"title":"สกุล"},
+            {"title":"จำนวนหุ้น(30/04/66)"},
+            {"title":"สมัครสมาชิก"},
+            {"title":"เพิ่มหุ้น"},
+            {"title":"ถอนหุ้น"},
+            {"title":"จำนวนหุ้น"},
+            {"title":"มูลค่าหุ้น"},
+            {"title":"วันที่เป็นสมาชิก"},
+            {"title":"วันที่ออกจากสมาชิก"},
+            {"title":"ชื่อ (เดิม)"},
+            {"title":"นามสกุล (เดิม)"},
+            {"title":"คณะ / หน่วยงาน"}
+          ]
+        });
+      });
+    }
+  </script>

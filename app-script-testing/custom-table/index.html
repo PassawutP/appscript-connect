@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="card" style="width: 30rem;">
+      <div class="card-body">
+        <h5 class="card-title">ค้นหาข้อมูล</h5>
+        <div class="d-flex justify-content-center mt-3" id="loading" style="visibility: hidden;">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="text-md-start ms-3">กรุณารอประมาณ 30 วินาที</p>
+        </div>
+        <p class="card-text" id="receive">
+        </p>
+        <div class="d-flex justify-content-center mb-3">
+          <input type="text" class="form-control" id="firstName" placeholder="ชื่อ">
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+          <input type="text" class="form-control" id="surName" placeholder="นามสกุล">
+        </div>
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-primary" onclick="update()">Submit</button>
+        </div>
+        <script>
+          function update(){
+            document.querySelector('#loading').style.visibility = 'visible';
+            google.script.run.withSuccessHandler(onDataReceived).myFunction();
+          }
+
+          function onDataReceived(sheetValues) {
+            document.querySelector('#loading').style.visibility = 'hidden';
+            var firstName = document.querySelector('#firstName').value;
+            var surName = document.querySelector('#surName').value;
+            var status = "Not found";
+            if (!sheetValues) {
+              console.log('Error: No data received.');
+              return;
+            }
+            var message = "<table class='table table-bordered'><thead><tr><th scope='col'>ข้อมูล</th><th scope='col'>รายระเอียด</th></tr></thead><tbody>";
+            for (var i = 1; i < sheetValues.length; i++) {
+              var memberFirstName = sheetValues[i][4];
+              var memberSurName = sheetValues[i][5];
+              if (memberFirstName === firstName && memberSurName === surName) {
+                for (var j = 0; j < sheetValues[i].length; j++) {
+                  message += "<tr><td>"+sheetValues[0][j]+"</td><td>" + sheetValues[i][j] + "</td><tr>";
+                }
+                break;
+              }
+            }
+            message += "</tbody></table>";
+            if (status === "Not found"){
+              document.querySelector('#receive').innerHTML = "<p class='text-md-start'>ไม่ค้นพบข้อมูล</p>";
+             return; 
+            }
+            document.querySelector('#receive').innerHTML = message;
+          }
+        </script>
+      </div>
+    </div>
+  </body>
+</html>
